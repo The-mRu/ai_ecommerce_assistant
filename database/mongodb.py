@@ -66,6 +66,7 @@ def search_products(query):
 
         "budget phone": "budget",
         "cheap phone": "budget"
+        
     }
 
     for old, new in replacements.items():
@@ -194,27 +195,30 @@ def load_conversation(user_id, limit=10):
 # =========================
 
 def recommend_products(category=None, max_price=None):
-    
-    if category:
-        category = category.lower()
 
-        category_mapping = {
+    query = {}
+
+    # CATEGORY NORMALIZATION
+    category_mapping = {
 
         "mobile": "smartphone",
         "phone": "smartphone",
         "android": "smartphone",
         "gaming": "gaming"
     }
+    
+    
+    
 
-    category = category_mapping.get(
-        category,
-        category
-    )
-
-    query = {}
-
-    # CATEGORY FILTER
+    # APPLY NORMALIZATION
     if category:
+
+        category = category.lower()
+
+        category = category_mapping.get(
+            category,
+            category
+        )
 
         query["$or"] = [
 
@@ -246,13 +250,9 @@ def recommend_products(category=None, max_price=None):
         query["price"] = {
             "$lte": max_price
         }
-        
-    print("FINAL QUERY:")
-    print(query)
-
 
     products = list(
-        
+
         products_collection.find(
 
             query,
@@ -263,7 +263,5 @@ def recommend_products(category=None, max_price=None):
 
         ).sort("rating", -1)
     )
-    print("FOUND PRODUCTS:")
-    print(products)
 
     return products

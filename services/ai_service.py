@@ -119,18 +119,54 @@ def extract_user_intent(message):
 
     Possible fields:
     - category
+    - sub_category
+    - brand
+    - tags
     - max_price
     - products
 
     Examples:
 
     User:
-    best gaming beast under 700
+    Show premium Apple phones
+
+    Output:
+    {{
+        "intent": "search_products",
+        "brand": "Apple",
+        "sub_category": "Flagship",
+        "category": "Smartphone"
+    }}
+
+    User:
+    Show Samsung flagship devices
+
+    Output:
+    {{
+        "intent": "search_products",
+        "brand": "Samsung",
+        "sub_category": "Flagship",
+        "category": "Smartphone"
+    }}
+
+    User:
+    Any budget smartphones?
 
     Output:
     {{
         "intent": "recommend_products",
-        "category": "gaming",
+        "category": "Smartphone",
+        "tags": "budget"
+    }}
+
+    User:
+    Best gaming beast under 700
+
+    Output:
+    {{
+        "intent": "recommend_products",
+        "category": "Smartphone",
+        "tags": "gaming",
         "max_price": 700
     }}
 
