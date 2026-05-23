@@ -199,8 +199,10 @@ def ai_chat(user_id, message):
     
     
     extracted_data = extract_user_intent(message)
-
+    print("EXTRACTED DATA:")
     print(extracted_data)
+
+    
     intent = extracted_data.get("intent")
     
     # =========================
